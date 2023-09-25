@@ -1,11 +1,12 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Header() {
   return (
     <header>
       <nav className="flex flex-wrap items-center justify-between bg-teal-500 p-6">
         <div className="flex flex-shrink-0 items-center text-white mr-6">
-          <img src="/library.png" className="fill-current h-8 w-8 mr-2" width="54" height="54" />
+          <Image src="/library.png" alt='library' className="fill-current h-8 w-8 mr-2" width="54" height="54" />
           <span className="font-semibold text-xl tracking-tight">Local Library</span>
         </div>
         <div className="block sm:hidden">
