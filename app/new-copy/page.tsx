@@ -10,6 +10,8 @@ export default async function BookCopyForm() {
   async function createBookCopy(formData: FormData) {
     'use server'
 
+    const baseUrl = process.env.BASE_URL
+
     const payload = {
       book_id: parseInt(formData.get('book_id') as string),
       imprint: formData.get('imprint'),
@@ -18,7 +20,7 @@ export default async function BookCopyForm() {
     }
     console.log('pyload:', payload)
 
-    const resp = await fetch('http://localhost:8080/api/copies', {
+    const resp = await fetch(`${baseUrl}/api/copies`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

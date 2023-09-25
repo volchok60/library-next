@@ -1,5 +1,67 @@
+const baseUrl = process.env.BASE_URL
+
+export async function authorsCount() {
+  const resp = await fetch(`${baseUrl}/api/authors`, {
+    method: "HEAD"
+  })
+
+  if (!resp.ok) {
+    console.log('status:', resp.status, 'statusText:', resp.statusText)
+    throw new Error('Failed to fetch authors count')
+  }
+  return resp.headers.get('x-result-count')
+}
+
+export async function booksCount() {
+  const resp = await fetch(`${baseUrl}/api/books`, {
+    method: "HEAD"
+  })
+
+  if (!resp.ok) {
+    console.log('status:', resp.status, 'statusText:', resp.statusText)
+    throw new Error('Failed to fetch books count')
+  }
+  return resp.headers.get('x-result-count')
+}
+
+export async function copiesCount() {
+  const resp = await fetch(`${baseUrl}/api/copies`, {
+    method: "HEAD"
+  })
+
+  if (!resp.ok) {
+    console.log('status:', resp.status, 'statusText:', resp.statusText)
+    throw new Error('Failed to fetch book copies count')
+  }
+  return resp.headers.get('x-result-count')
+}
+
+export async function availableCopiesCount() {
+  const resp = await fetch(`${baseUrl}/api/copies/available`, {
+    method: "HEAD"
+  })
+
+  if (!resp.ok) {
+    console.log('status:', resp.status, 'statusText:', resp.statusText)
+    throw new Error('Failed to fetch available book copies count')
+  }
+  return resp.headers.get('x-result-count')
+}
+
+export async function genresCount() {
+  const resp = await fetch(`${baseUrl}/api/genres`, {
+    method: "HEAD"
+  })
+
+  if (!resp.ok) {
+    console.log('status:', resp.status, 'statusText:', resp.statusText)
+    throw new Error('Failed to fetch genres count')
+  }
+  return resp.headers.get('x-result-count')
+}
+
 export async function getAuthors() {
-  const resp = await fetch('http://localhost:8080/api/authors')
+  const resp = await fetch(`${baseUrl}/api/authors`)
 
   if (!resp.ok) {
     console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -12,7 +74,7 @@ export async function getAuthors() {
 }
 
 export async function getGenres() {
-  const resp = await fetch('http://localhost:8080/api/genres')
+  const resp = await fetch(`${baseUrl}/api/genres`)
 
   if (!resp.ok) {
     console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -25,7 +87,7 @@ export async function getGenres() {
 }
 
 export async function getBooks() {
-  const resp = await fetch('http://localhost:8080/api/books')
+  const resp = await fetch(`${baseUrl}/api/books`)
 
   if (!resp.ok) {
     console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -38,7 +100,7 @@ export async function getBooks() {
 }
 
 export async function getBookCopies() {
-  const resp = await fetch('http://localhost:8080/api/copies')
+  const resp = await fetch(`${baseUrl}/api/copies`)
 
   if (!resp.ok) {
     console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -51,7 +113,7 @@ export async function getBookCopies() {
 }
 
 export async function getAuthor(id: number) {
-  const resp = await fetch('http://localhost:8080/api/authors/'+id)
+  const resp = await fetch(`${baseUrl}/api/authors/${id}`)
 
   if (!resp.ok) {
     console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -64,7 +126,7 @@ export async function getAuthor(id: number) {
 }
 
 export async function getBook(id: number) {
-  const resp = await fetch('http://localhost:8080/api/books/'+id)
+  const resp = await fetch(`${baseUrl}/api/books/${id}`)
 
   if (!resp.ok) {
     console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -77,7 +139,7 @@ export async function getBook(id: number) {
 }
 
 export async function getGenre(id: number) {
-  const resp = await fetch('http://localhost:8080/api/genres/'+id)
+  const resp = await fetch(`${baseUrl}/api/genres/${id}`)
 
   if (!resp.ok) {
     console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -90,7 +152,7 @@ export async function getGenre(id: number) {
 }
 
 export async function getBookCopy(id: number) {
-  const resp = await fetch('http://localhost:8080/api/copies/'+id)
+  const resp = await fetch(`${baseUrl}/api/copies/${id}`)
 
   if (!resp.ok) {
     console.log('status:', resp.status, 'statusText:', resp.statusText)

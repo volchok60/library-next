@@ -6,11 +6,13 @@ export default async function GenreForm() {
   async function createGenre(formData: FormData) {
     'use server'
 
+    const baseUrl = process.env.BASE_URL
+
     const payload = {
       name: formData.get('name')
     }
 
-    const resp = await fetch('http://localhost:8080/api/genres', {
+    const resp = await fetch(`${baseUrl}/api/genres`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

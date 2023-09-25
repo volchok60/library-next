@@ -14,6 +14,8 @@ export default async function UpdateAuthorForm({params}: {params: {id: number}})
   async function updateAuthor(formData: FormData) {
     'use server'
 
+    const baseUrl = process.env.BASE_URL
+
     const birthDate = new Date(formData.get('birth_date') as string)
     const str = formData.get('death_date') as string // can be ''
     const deathDate = str ? new Date(str) : null
@@ -27,7 +29,7 @@ export default async function UpdateAuthorForm({params}: {params: {id: number}})
     }
     console.log('payload:', payload)
 
-    const resp = await fetch('http://localhost:8080/api/authors/'+id, {
+    const resp = await fetch(`${baseUrl}/api/authors/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

@@ -16,6 +16,8 @@ export default async function UpdateBookCopyForm({params}: {params: {id: number;
   async function updateBookCopy(formData: FormData) {
     'use server'
 
+    const baseUrl = process.env.BASE_URL
+
     const str = formData.get('due_date') as string // can be ''
     const dueDate = str ? new Date(str) : null
 
@@ -27,7 +29,7 @@ export default async function UpdateBookCopyForm({params}: {params: {id: number;
     }
     console.log('payload:', payload)
 
-    const resp = await fetch('http://localhost:8080/api/copies/'+id, {
+    const resp = await fetch(`${baseUrl}/api/copies/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

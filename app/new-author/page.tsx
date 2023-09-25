@@ -6,6 +6,8 @@ export default async function AuthorForm() {
   async function createAuthor(formData: FormData) {
     'use server'
 
+    const baseUrl = process.env.BASE_URL
+
     const birthDate = new Date(formData.get('birth_date') as string)
     const str = formData.get('death_date') as string // can be ''
     const deathDate = str ? new Date(str) : null
@@ -19,7 +21,7 @@ export default async function AuthorForm() {
     }
     console.log('payload:', payload)
 
-    const resp = await fetch('http://localhost:8080/api/authors', {
+    const resp = await fetch(`${baseUrl}/api/authors`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

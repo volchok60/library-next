@@ -1,5 +1,7 @@
+import { booksCount, copiesCount, availableCopiesCount, authorsCount, genresCount } from "./lib/utils"
+
 export default async function Home() {
-  
+
   const booksCnt = await booksCount()
   const copiesCnt = await copiesCount()
   const availableCopiesCnt = await availableCopiesCount()
@@ -19,64 +21,4 @@ export default async function Home() {
       </ul>
     </div>
   )
-}
-
-async function authorsCount() {
-  const resp = await fetch('http://localhost:8080/api/authors', {
-    method: "HEAD"
-  })
-
-  if (!resp.ok) {
-    console.log('status:', resp.status, 'statusText:', resp.statusText)
-    throw new Error('Failed to fetch authors count')
-  }
-  return resp.headers.get('x-result-count')
-}
-
-async function booksCount() {
-  const resp = await fetch('http://localhost:8080/api/books', {
-    method: "HEAD"
-  })
-
-  if (!resp.ok) {
-    console.log('status:', resp.status, 'statusText:', resp.statusText)
-    throw new Error('Failed to fetch books count')
-  }
-  return resp.headers.get('x-result-count')
-}
-
-async function copiesCount() {
-  const resp = await fetch('http://localhost:8080/api/copies', {
-    method: "HEAD"
-  })
-
-  if (!resp.ok) {
-    console.log('status:', resp.status, 'statusText:', resp.statusText)
-    throw new Error('Failed to fetch book copies count')
-  }
-  return resp.headers.get('x-result-count')
-}
-
-async function availableCopiesCount() {
-  const resp = await fetch('http://localhost:8080/api/copies/available', {
-    method: "HEAD"
-  })
-
-  if (!resp.ok) {
-    console.log('status:', resp.status, 'statusText:', resp.statusText)
-    throw new Error('Failed to fetch available book copies count')
-  }
-  return resp.headers.get('x-result-count')
-}
-
-async function genresCount() {
-  const resp = await fetch('http://localhost:8080/api/genres', {
-    method: "HEAD"
-  })
-
-  if (!resp.ok) {
-    console.log('status:', resp.status, 'statusText:', resp.statusText)
-    throw new Error('Failed to fetch genres count')
-  }
-  return resp.headers.get('x-result-count')
 }

@@ -15,6 +15,8 @@ export default async function UpdateBookForm({params}: {params: {id: number}}) {
   async function updateBook(formData: FormData) {
     'use server'
 
+    const baseUrl = process.env.BASE_URL
+
     const payload = {
       title: formData.get('title'),
       author_id: parseInt(formData.get('author_id') as string),
@@ -23,7 +25,7 @@ export default async function UpdateBookForm({params}: {params: {id: number}}) {
       isbn: formData.get('isbn')
     }
 
-    const resp = await fetch('http://localhost:8080/api/books/'+id, {
+    const resp = await fetch(`${baseUrl}/api/books/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

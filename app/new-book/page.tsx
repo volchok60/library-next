@@ -12,6 +12,8 @@ export default async function BookForm() {
   async function createBook(formData: FormData) {
     'use server'
 
+    const baseUrl = process.env.BASE_URL
+
     const payload = {
       title: formData.get('title'), 
       author_id: parseInt(formData.get('author_id') as string),
@@ -20,7 +22,7 @@ export default async function BookForm() {
       isbn: formData.get('isbn')
     }
 
-    const resp = await fetch('http://localhost:8080/api/books', {
+    const resp = await fetch(`${baseUrl}/api/books`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
