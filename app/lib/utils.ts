@@ -166,11 +166,11 @@ export async function getBookCopy(id: number) {
 
 export function getBookCopyStatuses() {
   return [
-    "NotAvailable",
-    "OnOrder",
-    "InTransit",
-    "OnHold",
-    "OnLoan",
-    "InLibrary"
+    "NotAvailable", // 0
+    "OnOrder",      // 1
+    "InTransit",    // 2
+    "OnHold",       // 3
+    "OnLoan",       // 4
+    "InLibrary"     // 5
   ]
 }
