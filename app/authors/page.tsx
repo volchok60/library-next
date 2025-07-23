@@ -9,7 +9,7 @@ export default async function Authors() {
     <>
       <div className="flex justify-between pt-2">
         <h1 className="ml-2">Author List</h1>
-        <Link href="/new-author" className="rounded-md bg-cyan-500 text-white hover:bg-blue-500 mr-2 p-2">New Author</Link>
+        <Link href="/authors/create" className="rounded-md bg-cyan-500 text-white hover:bg-blue-500 mr-2 p-2">New Author</Link>
       </div>
       <div className="grid justify-items-center">
         <ul>

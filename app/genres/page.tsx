@@ -9,7 +9,7 @@ export default async function Genres() {
     <>
       <div className="flex justify-between pt-2">
         <h1 className="ml-2">Genre List</h1>
-        <Link href='/new-genre' className="rounded-md bg-cyan-500 text-white hover:bg-blue-500 mr-2 p-2">New Genre</Link>
+        <Link href='/genres/create' className="rounded-md bg-cyan-500 text-white hover:bg-blue-500 mr-2 p-2">New Genre</Link>
       </div>
       <div className="grid justify-items-center">
         <ul>
