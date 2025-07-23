@@ -1,4 +1,4 @@
-import { booksCount, copiesCount, availableCopiesCount, authorsCount, genresCount } from "./lib/utils"
+import { booksCount, copiesCount, availableCopiesCount, authorsCount, genresCount } from "./lib/api"
 
 export default async function Home() {
 
