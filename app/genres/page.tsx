@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { getGenres } from "@/app/lib/utils"
+import { getGenres } from "@/app/lib/api"
 import type { GenreType } from "@/app/components/genre"
 
 export default async function Genres() {

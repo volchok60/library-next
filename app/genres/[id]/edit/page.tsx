@@ -1,6 +1,6 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getGenre } from "@/app/lib/utils"
+import { getGenre } from "@/app/lib/api"
 
 export default async function UpdateGenreForm({params}: {params: {id: number;}}) {
   const id = params.id

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { getBook } from "@/app/lib/utils"
+import { getBook } from "@/app/lib/api"
 
 export default async function BookDetails({params}: {params: {id: number}}) {
   const id = params.id

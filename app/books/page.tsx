@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { getBooks } from "../lib/utils"
+import { getBooks } from "../lib/api"
 import type { BookType } from "@/app/components/book"
 
 export default async function Books() {

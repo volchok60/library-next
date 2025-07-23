@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { getAuthor } from "@/app/lib/utils"
+import { getAuthor } from "@/app/lib/api"
 import FormattedDate from '@/app/components/date'
 
 export default async function AuthorDetails({params}: {params: {id: number}}) {

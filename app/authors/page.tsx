@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { getAuthors } from "@/app/lib/utils"
+import { getAuthors } from "@/app/lib/api"
 import type { AuthorType } from "@/app/components/author"
 
 export default async function Authors() {

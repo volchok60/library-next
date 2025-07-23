@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { getGenre } from "../../lib/utils"
+import { getGenre } from "@/app/lib/api"
 
 export default async function GenreDetails({params}: {params: {id: number;}}) {
   const id = params.id

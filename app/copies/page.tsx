@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { getBookCopies } from "@/app/lib/utils"
+import { getBookCopies } from "@/app/lib/api"
 
 type BookCopyType = {
   id: number

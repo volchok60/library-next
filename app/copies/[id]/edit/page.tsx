@@ -1,6 +1,6 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getBooks, getBookCopy } from "@/app/lib/utils"
+import { getBooks, getBookCopy } from "@/app/lib/api"
 import Book from '@/app/components/book'
 import BookCopyStatus from '@/app/components/status'
 

@@ -1,6 +1,6 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getAuthor } from "@/app/lib/utils"
+import { getAuthor } from "@/app/lib/api"
 
 export default async function UpdateAuthorForm({params}: {params: {id: number}}) {
 

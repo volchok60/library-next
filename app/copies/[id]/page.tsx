@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { getBookCopy, getBookCopyStatuses } from "@/app/lib/utils"
+import { getBookCopy } from "@/app/lib/api"
+import { getBookCopyStatuses } from "@/app/lib/utils"
 import FormattedDate from '@/app/components/date'
 
 export default async function BookCopyDetails({params}: {params: {id: number;}}) {
