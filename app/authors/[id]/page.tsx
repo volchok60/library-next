@@ -2,12 +2,15 @@ import Link from "next/link"
 import { getAuthor } from "@/app/lib/api"
 import FormattedDate from '@/app/components/date'
 
-export default async function AuthorDetails({params}: {params: {id: number}}) {
+type Params = Promise<{ id: number }>
+
+export default async function AuthorDetails(props: { params: Params }) { 
+  const params = await props.params 
   const id = params.id
   const author = await getAuthor(id)
   console.log('author:', author)
   
-  const birthDate = author.birth_date.split('T')[0]
+  const birthDate = author.birth_date ? author.birth_date.split('T')[0] : undefined
   const deathDate = author.death_date?.split("T")[0]
 
   return (
@@ -19,7 +22,7 @@ export default async function AuthorDetails({params}: {params: {id: number}}) {
             {author.first_name}{' '}{author.family_name}
           </span>
           <span> ( </span>
-          <FormattedDate dateString={birthDate} />
+          {birthDate && <FormattedDate dateString={birthDate} />}
           <span> - </span>
           {deathDate ? (<FormattedDate dateString={deathDate} />) : ('Alive')}
           <span> ) </span>

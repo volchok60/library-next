@@ -1,7 +1,10 @@
 import Link from "next/link"
 import { getGenre } from "@/app/lib/api"
 
-export default async function GenreDetails({params}: {params: {id: number;}}) {
+type Params = Promise<{ id: number }>
+
+export default async function GenreDetails(props: { params: Params }) {
+  const params = await props.params
   const id = params.id
   const genre = await getGenre(id)
 

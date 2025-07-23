@@ -332,7 +332,8 @@ export async function createBook(bookData: any) {
       title: bookData.title,
       author_id: bookData.authorId,
       genre_id: bookData.genreId,
-      summary: bookData.summary
+      summary: bookData.summary,
+      isbn: bookData.isbn
     })
     .select()
     .single()
@@ -352,7 +353,8 @@ export async function updateBook(id: number, bookData: any) {
       title: bookData.title,
       author_id: bookData.author_id,
       genre_id: bookData.genre_id,
-      summary: bookData.summary
+      summary: bookData.summary,
+      isbn: bookData.isbn
     })
     .eq('id', id)
     .select()

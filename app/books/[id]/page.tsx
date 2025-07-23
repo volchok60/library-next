@@ -1,7 +1,10 @@
 import Link from "next/link"
 import { getBook } from "@/app/lib/api"
 
-export default async function BookDetails({params}: {params: {id: number}}) {
+type Params = Promise<{ id: number }>
+
+export default async function BookDetails(props: { params: Params }) {
+  const params = await props.params
   const id = params.id
   const book = await getBook(id)
   const author = book.author

@@ -1,6 +1,6 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getAuthors, getGenres } from "@/app/lib/api"
+import { getAuthors, getGenres, createBook } from "@/app/lib/api"
 import Author from "@/app/components/author"
 import Genre from "@/app/components/genre"
 
@@ -9,26 +9,18 @@ export default async function BookForm() {
   const authors = await getAuthors()
   const genres = await getGenres()
 
-  async function createBook(formData: FormData) {
+  async function createBookA(formData: FormData) {
     'use server'
-
-    const baseUrl = process.env.BASE_URL
 
     const payload = {
       title: formData.get('title'), 
-      author_id: parseInt(formData.get('author_id') as string),
-      genre_id: parseInt(formData.get('genre_id') as string),
+      authorId: parseInt(formData.get('author_id') as string),
+      genreId: parseInt(formData.get('genre_id') as string),
       summary: formData.get('summary'),
       isbn: formData.get('isbn')
     }
 
-    const resp = await fetch(`${baseUrl}/api/books`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    })
+    const resp = await createBook(payload)
 
     if (!resp.ok) {
       console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -44,7 +36,7 @@ export default async function BookForm() {
   return (
     <div>
       <h1 className='text-center m-2'>New Book</h1>
-      <form action={createBook}>
+      <form action={createBookA}>
         <div className="grid grid-cols-2 gap-3">
           <label className='sm:text-end'>Title:</label>
           <input type="text" name="title" required />

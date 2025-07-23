@@ -1,21 +1,21 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getBook, getAuthors, getGenres } from "@/app/lib/api"
+import { getBook, getAuthors, getGenres, updateBook } from "@/app/lib/api"
 import Author from "@/app/components/author"
 import Genre from "@/app/components/genre"
 
-export default async function UpdateBookForm({params}: {params: {id: number}}) {
+type Params = Promise<{ id: number }>
 
+export default async function UpdateBookForm(props: { params: Params }) {
+  const params = await props.params
   const id = params.id
   const book = await getBook(id)
 
   const authors = await getAuthors()
   const genres = await getGenres()
 
-  async function updateBook(formData: FormData) {
+  async function updateBookA(formData: FormData) {
     'use server'
-
-    const baseUrl = process.env.BASE_URL
 
     const payload = {
       title: formData.get('title'),
@@ -25,13 +25,7 @@ export default async function UpdateBookForm({params}: {params: {id: number}}) {
       isbn: formData.get('isbn')
     }
 
-    const resp = await fetch(`${baseUrl}/api/books/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    })
+    const resp = await updateBook(id, payload)
 
     if (!resp.ok) {
       console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -48,7 +42,7 @@ export default async function UpdateBookForm({params}: {params: {id: number}}) {
   return (
     <div>
       <h1 className='text-center m-2'>Update Book</h1>
-      <form action={updateBook}>
+      <form action={updateBookA}>
         <div className="grid grid-cols-2 gap-3">
           <label className='sm:text-end'>Title:</label>
           <input type="text" name="title" required defaultValue={book.title} />

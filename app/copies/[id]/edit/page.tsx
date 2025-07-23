@@ -1,10 +1,13 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getBooks, getBookCopy } from "@/app/lib/api"
+import { getBooks, getBookCopy, updateBookCopy } from "@/app/lib/api"
 import Book from '@/app/components/book'
 import BookCopyStatus from '@/app/components/status'
 
-export default async function UpdateBookCopyForm({params}: {params: {id: number;}}) {
+type Params = Promise<{ id: number }>
+
+export default async function UpdateBookCopyForm(props: { params: Params }) {
+  const params = await props.params
   const id = params.id
   const bookCopy = await getBookCopy(id)
   console.log('bookCopy:', bookCopy)
@@ -13,29 +16,22 @@ export default async function UpdateBookCopyForm({params}: {params: {id: number;
 
   const books = await getBooks()
 
-  async function updateBookCopy(formData: FormData) {
+  async function updateBookCopyA(formData: FormData) {
     'use server'
-
-    const baseUrl = process.env.BASE_URL
 
     const str = formData.get('due_date') as string // can be ''
     const dueDate = str ? new Date(str) : null
 
     const payload = {
-      book_id: parseInt(formData.get('book_id') as string),
+      bookId: parseInt(formData.get('book_id') as string),
       imprint: formData.get('imprint'),
-      due_date: dueDate,
-      status: parseInt(formData.get('status') as string)
+      dueBack: dueDate,
+      status: parseInt(formData.get('status') as string),
+      isbn: formData.get('isbn')
     }
     console.log('payload:', payload)
 
-    const resp = await fetch(`${baseUrl}/api/copies/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    })
+    const resp = await updateBookCopy(id, payload)
 
     if (!resp.ok) {
       console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -51,7 +47,7 @@ export default async function UpdateBookCopyForm({params}: {params: {id: number;
   return (
     <div>
       <h1 className='text-center m-2'>Update Book Copy</h1>
-      <form action={updateBookCopy}>
+      <form action={updateBookCopyA}>
         <div className="grid grid-cols-2 gap-3">
           <Book books={books} selectedId={bookCopy.book.id} />
 

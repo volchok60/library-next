@@ -1,41 +1,35 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getAuthor } from "@/app/lib/api"
+import { getAuthor, updateAuthor } from "@/app/lib/api"
 
-export default async function UpdateAuthorForm({params}: {params: {id: number}}) {
+type Params = Promise<{ id: number }>
 
-  const id = params.id
+export default async function UpdateAuthorForm(props: { params: Params }) {
+  const params = await props.params
+  const id = Number(params.id)
   const author = await getAuthor(id)
   console.log('author:', author)
 
-  const birthDate = author.birth_date.split('T')[0]
+  const birthDate = author.birth_date ? author.birth_date.split('T')[0] : ''
   const deathDate = author.death_date?.split('T')[0]
 
-  async function updateAuthor(formData: FormData) {
+  async function updateAuthorA(formData: FormData) {
     'use server'
-
-    const baseUrl = process.env.BASE_URL
 
     const birthDate = new Date(formData.get('birth_date') as string)
     const str = formData.get('death_date') as string // can be ''
     const deathDate = str ? new Date(str) : null
 
     const payload = {
-      first_name: formData.get('first_name'),
-      family_name: formData.get('family_name'),
-      birth_date: birthDate,
-      death_date: deathDate,
-      life_span: formData.get('life_span')
+      firstName: formData.get('first_name'),
+      familyName: formData.get('family_name'),
+      birthDate: birthDate,
+      deathDate: deathDate,
+      lifeSpan: formData.get('life_span')
     }
     console.log('payload:', payload)
 
-    const resp = await fetch(`${baseUrl}/api/authors/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    })
+    const resp = await updateAuthor(id, payload)
 
     if (!resp.ok) {
       console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -51,7 +45,7 @@ export default async function UpdateAuthorForm({params}: {params: {id: number}})
   return (
     <div>
       <h1 className='text-center m-2'>Update Author</h1>
-      <form action={updateAuthor}>
+      <form action={updateAuthorA}>
         <div className="grid grid-cols-2 gap-3">
           <label className='sm:text-end'>First Name:</label>
           <input type="text" name="first_name" required defaultValue={author.first_name} />
@@ -66,7 +60,7 @@ export default async function UpdateAuthorForm({params}: {params: {id: number}})
           <input type="date" name="death_date" defaultValue={deathDate} />
           
           <label className='sm:text-end'>Life Span:</label>
-          <textarea name='life_span' rows={20} cols={50} required defaultValue={author.life_span} />
+          <textarea name='life_span' rows={20} cols={50} required defaultValue={author.life_span ?? ''} />
         </div>
         <div className='text-center'>
           <button type="submit" className='rounded-md bg-cyan-500 text-white hover:bg-blue-500 m-2 px-2'>

@@ -3,7 +3,10 @@ import { getBookCopy } from "@/app/lib/api"
 import { getBookCopyStatuses } from "@/app/lib/utils"
 import FormattedDate from '@/app/components/date'
 
-export default async function BookCopyDetails({params}: {params: {id: number;}}) {
+type Params = Promise<{ id: number }>
+
+export default async function BookCopyDetails(props: { params: Params }) {
+  const params = await props.params
   const id = params.id
   const bookCopy = await getBookCopy(id)
   console.log('bookCopy:', bookCopy)

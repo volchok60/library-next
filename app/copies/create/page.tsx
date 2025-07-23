@@ -1,32 +1,28 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getBooks } from "@/app/lib/api"
+import { getBooks, createBookCopy } from "@/app/lib/api"
 import Book from '@/app/components/book'
 import BookCopyStatus from '@/app/components/status'
 
 export default async function BookCopyForm() {
   const books = await getBooks()
 
-  async function createBookCopy(formData: FormData) {
+  async function createBookCopyA(formData: FormData) {
     'use server'
 
-    const baseUrl = process.env.BASE_URL
+    const str = formData.get('due_date') as string
+    const dueDate = str ? new Date(str) : null
 
     const payload = {
-      book_id: parseInt(formData.get('book_id') as string),
+      bookId: parseInt(formData.get('book_id') as string),
       imprint: formData.get('imprint'),
-      due_date: new Date(formData.get('due_date') as string),
-      status: parseInt(formData.get('status') as string)
+      dueBack: dueDate,
+      status: parseInt(formData.get('status') as string),
+      isbn: formData.get('isbn')
     }
     console.log('pyload:', payload)
 
-    const resp = await fetch(`${baseUrl}/api/copies`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    })
+    const resp = await createBookCopy(payload)
 
     if (!resp.ok) {
       console.log('status:', resp.status, 'statusText:', resp.statusText)
@@ -42,7 +38,7 @@ export default async function BookCopyForm() {
   return (
     <div>
       <h1 className='text-center m-2'>New Book Copy</h1>
-      <form action={createBookCopy}>
+      <form action={createBookCopyA}>
         <div className="grid grid-cols-2 gap-3">
           <Book books={books} />
 
