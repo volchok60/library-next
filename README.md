@@ -12,15 +12,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Supabase Setup
 
-Set environment variables:
+## Deploying on Netlify
+
+Environment variables to be set in Netlify Dashboard:
 - NEXT_PUBLIC_SUPABASE_URL 
 - NEXT_PUBLIC_SUPABASE_ANON_KEY 
 
-
-## Deployed on Netlify
-
-[Live on Netlify](https://library-next-supabase.netlify.app/)
-
-
+[Deployed on Netlify](https://library-next-supabase.netlify.app/)
