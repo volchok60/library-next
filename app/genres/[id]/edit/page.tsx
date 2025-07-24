@@ -23,6 +23,7 @@ export default async function UpdateGenreForm(props: { params: Params }) {
       throw new Error('Failed to update Genre')
     }
     const genre = await resp.json()
+    console.log('updated genre:', genre)
 
     revalidatePath('/genres')
     redirect('/genres')
